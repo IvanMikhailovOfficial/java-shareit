@@ -19,18 +19,18 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto){
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto userDto) {
         log.debug("Получен метод POST с id {} для создания юзера", userDto);
         return new ResponseEntity<>(userService.create(userDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         log.debug("Получен метод delete для удаления юзера с id {} ", id);
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -43,18 +43,14 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         log.debug("Получен метод getAllUsers для получения всех юзеров");
         return new ResponseEntity<>(userService.readAll(), HttpStatus.OK);
     }
 
-
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser (@PathVariable Long id, @RequestBody UserDto user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto user) {
         log.debug("Поступил запрос updateUser для юзера с id {} на изменение", id);
         return new ResponseEntity<>(userService.update(user, id), HttpStatus.OK);
     }
-
-
-
 }

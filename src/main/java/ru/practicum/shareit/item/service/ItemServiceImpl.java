@@ -34,7 +34,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void delete(Long id) {
-
     }
 
     @Override

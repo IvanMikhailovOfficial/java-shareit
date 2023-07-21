@@ -18,7 +18,6 @@ public class InMemoryUserStorage implements UserStorage {
 
     private long idGenerator = 1;
 
-
     @Override
     public User create(User user) {
         checkEmailDuplicate(user.getEmail());
@@ -30,17 +29,14 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User update(User user, Long id) {
-        if(!hashMap.containsKey(id)){
+        if (!hashMap.containsKey(id)) {
             throw new UserNotFoundException("Юзера с таким id {} нет");
         }
         User oldUser = hashMap.get(id);
-        if(user.getName() != null){
+        if (user.getName() != null) {
             oldUser.setName(user.getName());
         }
-        if(user.getEmail() != null && !user.getEmail().equals(oldUser.getEmail())){
-            //if(user.getEmail().equals(oldUser.getEmail())){
-                //throw new EmailDuplicateException("Нельзя обновить email на идентичный");
-            //}
+        if (user.getEmail() != null && !user.getEmail().equals(oldUser.getEmail())) {
             checkEmailDuplicate(user.getEmail());
             oldUser.setEmail(user.getEmail());
         }
@@ -59,7 +55,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User get(Long id) {
-        if (hashMap.containsKey(id)){
+        if (hashMap.containsKey(id)) {
             log.debug("Юзер с id {} был успешно получен", id);
             return hashMap.get(id);
         } else {
@@ -74,14 +70,14 @@ public class InMemoryUserStorage implements UserStorage {
 
     public void checkEmailDuplicate(String email) {
         for (User user : hashMap.values()) {
-            if(email.equals(user.getEmail())){
+            if (email.equals(user.getEmail())) {
                 throw new EmailDuplicateException("Такой email уже есть");
             }
         }
     }
 
-    public void userExist(Long userId){
-        if(!hashMap.containsKey(userId)){
+    public void userExist(Long userId) {
+        if (!hashMap.containsKey(userId)) {
             throw new UserNotFoundException("Юзера с id " + userId + " не существует");
         }
     }
