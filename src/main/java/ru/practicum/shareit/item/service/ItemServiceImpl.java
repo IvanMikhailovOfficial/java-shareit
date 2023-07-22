@@ -1,7 +1,7 @@
 package ru.practicum.shareit.item.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
@@ -12,14 +12,10 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
     private final ItemStorage itemStorage;
-
-    @Autowired
-    public ItemServiceImpl(ItemStorage itemStorage) {
-        this.itemStorage = itemStorage;
-    }
 
     @Override
     public ItemDto create(ItemDto itemDto, Long userId) {
