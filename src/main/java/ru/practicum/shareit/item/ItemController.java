@@ -3,7 +3,6 @@ package ru.practicum.shareit.item;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -61,13 +60,13 @@ public class ItemController {
     @DeleteMapping("/{itemId}")
     public ResponseEntity<String> deleteItemById(@PathVariable Long itemId) {
         itemService.delete(itemId);
-        log.info("Получен DELETE запрос на удаление Item  c id {}",itemId);
+        log.info("Получен DELETE запрос на удаление Item  c id {}", itemId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<ItemDto>> searchItemsByText(@RequestParam String text) {
-        log.info("Получен GET запрос на создание поиск ITEM по тексту {}",text);
+        log.info("Получен GET запрос на создание поиск ITEM по тексту {}", text);
         return new ResponseEntity<>(itemService.findByText(text), HttpStatus.OK);
     }
 
@@ -77,7 +76,7 @@ public class ItemController {
             @PathVariable Long itemId,
             @Valid @RequestBody CommentRequestDto commentRequestDto
     ) {
-        log.info("Получен POST запрос на создание Comment от user {} к Item {}",userId,itemId);
+        log.info("Получен POST запрос на создание Comment от user {} к Item {}", userId, itemId);
         return new ResponseEntity<>(itemService.addComment(userId, itemId, commentRequestDto), HttpStatus.OK);
     }
 }

@@ -13,20 +13,19 @@ import ru.practicum.shareit.booking.service.BookingService;
 import javax.validation.Valid;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/bookings")
 @RequiredArgsConstructor
 @Slf4j
 public class BookingController {
 
-
     private final BookingService bookingService;
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<BookingDto> readBookingById(@RequestHeader(name = "X-Sharer-User-Id") Long userId,
                                                       @PathVariable Long bookingId) {
-        log.info("Получен GET запрос по эндпоинту /bookings/{bookingId} со значениями userId{} и bookingId {}", userId, bookingId);
+        log.info("Получен GET запрос по эндпоинту /bookings/{bookingId} со значениями userId{} и bookingId {}", userId,
+                bookingId);
         return new ResponseEntity<>(bookingService.getBookingByIdAndBooker(userId, bookingId), HttpStatus.OK);
     }
 
@@ -45,7 +44,8 @@ public class BookingController {
     public ResponseEntity<BookingDto> updateBooking(@PathVariable Long bookingId,
                                                     @RequestHeader(name = "X-Sharer-User-Id") Long userId,
                                                     @RequestParam(name = "approved", required = false) Boolean approved) {
-        log.info("Получен PATCH запрос updateBooking  по эндпоинту /bookings/{bookingId} со значениями userId{} и bookingId {}", userId, bookingId);
+        log.info("Получен PATCH запрос updateBooking  по эндпоинту /bookings/{bookingId} со значениями userId{} и " +
+                "bookingId {}", userId, bookingId);
         return new ResponseEntity<>(bookingService.update(bookingId, userId, approved), HttpStatus.OK);
     }
 
@@ -53,7 +53,8 @@ public class BookingController {
     public ResponseEntity<String> deleteBookingById(@PathVariable Long bookingId) {
         bookingService.deleteBookingById(bookingId);
 
-        log.info("Получен DELETE запрос deleteBookingById  по эндпоинту /bookings/{bookingId} со значениямиookingId {}", bookingId);
+        log.info("Получен DELETE запрос deleteBookingById  по эндпоинту /bookings/{bookingId} со значениями bookingId {}",
+                bookingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -73,4 +74,3 @@ public class BookingController {
         return new ResponseEntity<>(bookingService.getOwnerBookings(userId, state), HttpStatus.OK);
     }
 }
-

@@ -94,7 +94,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "AND bok.start < :now " +
             "AND bok.end > :now1 " +
             "ORDER BY bok.start DESC")
-    List<Booking> findByBookerIdAndStartLessThanAndEndGreaterThanOrderByStartDesc(Long bookerId, LocalDateTime now, LocalDateTime now1);
+    List<Booking> findByBookerIdAndStartLessThanAndEndGreaterThanOrderByStartDesc(Long bookerId, LocalDateTime now,
+                                                                                  LocalDateTime now1);
 
     @Query("SELECT bok FROM Booking bok " +
             "JOIN FETCH bok.item it " +
@@ -103,7 +104,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "AND bok.start < :now " +
             "AND bok.end > :now1 " +
             "ORDER BY bok.start DESC")
-    List<Booking> findByItemOwnerAndStartLessThanAndEndGreaterThanOrderByStartDesc(Long ownerId, LocalDateTime now, LocalDateTime now1);
+    List<Booking> findByItemOwnerAndStartLessThanAndEndGreaterThanOrderByStartDesc(Long ownerId, LocalDateTime now,
+                                                                                   LocalDateTime now1);
 
     Booking findFirstByItem_idAndEndBeforeOrderByEndDesc(Long itemId, LocalDateTime now);
 
@@ -111,8 +113,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByItem_IdAndBooker_IdOrderByStartDesc(Long itemId, Long userId);
 
-    List<Booking> findTop1BookingByItemIdAndEndIsBeforeAndStatusIs(Long itemId, LocalDateTime now, BookingStatus approved, Sort end);
+    List<Booking> findTop1BookingByItemIdAndEndIsBeforeAndStatusIs(Long itemId, LocalDateTime now,
+                                                                   BookingStatus approved, Sort end);
 
-    List<Booking> findTop1BookingByItemIdAndEndIsAfterAndStatusIs(Long itemId, LocalDateTime now, BookingStatus approved, Sort end);
-
+    List<Booking> findTop1BookingByItemIdAndEndIsAfterAndStatusIs(Long itemId, LocalDateTime now,
+                                                                  BookingStatus approved, Sort end);
 }

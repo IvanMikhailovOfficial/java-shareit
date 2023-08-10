@@ -61,7 +61,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("User не найден"));
 
         if (Boolean.FALSE.equals(item.isAvailable())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Item недоступен");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Item недоступен");
         }
 
         if (item.getOwner().getId().equals(userId)) {
@@ -69,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         if (checkTimestampBooking(bookingCreateDto.getStart(), bookingCreateDto.getEnd())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Некорректное время бронирования");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Некорректное время бронирования");
         }
 
 
@@ -99,7 +99,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException("Booking не найден"));
 
         if (!booking.getStatus().equals(BookingStatus.WAITING)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Booking не находится в статусе WAITING");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Booking не находится в статусе WAITING");
         }
 
         if (booking.getBooker().getId().equals(userId)) {
@@ -107,7 +107,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         if (!booking.getItem().getOwner().getId().equals(userId)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Данный User не может редактировать Booking");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Данный User не может редактировать Booking");
         }
 
         booking.setStatus(approved ? BookingStatus.APPROVED : BookingStatus.REJECTED);
@@ -131,7 +131,7 @@ public class BookingServiceImpl implements BookingService {
         checkValidState(state);
         BookingState bookingState = BookingState.valueOf(state.toUpperCase());
         LocalDateTime currentTime = LocalDateTime.now();
-        List<Booking> bookings ;
+        List<Booking> bookings;
 
         switch (bookingState) {
             case CURRENT:
@@ -162,7 +162,7 @@ public class BookingServiceImpl implements BookingService {
         try {
             BookingState.valueOf(state.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Unknown state: " + state);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown state: " + state);
         }
     }
 

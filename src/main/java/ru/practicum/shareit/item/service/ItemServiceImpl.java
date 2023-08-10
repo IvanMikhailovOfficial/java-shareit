@@ -23,7 +23,6 @@ import ru.practicum.shareit.item.repositories.ItemRepository;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repositories.UserRepository;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +33,11 @@ import static ru.practicum.shareit.booking.dto.BookingMapperDto.bookingItemRespo
 import static ru.practicum.shareit.comments.dto.CommentMapperDto.toListComment;
 import static ru.practicum.shareit.item.dto.ItemMapperDto.*;
 
-@Service
-@RequiredArgsConstructor
-@Slf4j
-@Transactional(readOnly = true)
-public class ItemServiceImpl implements ItemService {
+    @Service
+    @RequiredArgsConstructor
+    @Slf4j
+    @Transactional(readOnly = true)
+    public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
@@ -49,7 +48,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public ItemDto save(Long userId, ItemDto itemDto) {
         if (userId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Заголовок айди юзера не найден");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Заголовок айди юзера не найден");
         }
 
         User user = userRepository.findById(userId)
@@ -90,7 +89,7 @@ public class ItemServiceImpl implements ItemService {
             return toItemDto(save);
         }
 
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Ошибка обновления");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ошибка обновления");
     }
 
     @Override
@@ -148,7 +147,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemDto> findByText(String text) {
-        if (text ==null || text.isBlank()) {
+        if (text == null || text.isBlank()) {
             return new ArrayList<>();
         }
 
@@ -186,4 +185,3 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 }
-
