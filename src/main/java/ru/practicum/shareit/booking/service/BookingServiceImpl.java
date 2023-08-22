@@ -181,8 +181,7 @@ public class BookingServiceImpl implements BookingService {
         Pageable pageable = Utility.paginationWithoutSort(from, size);
         switch (bookingState) {
             case CURRENT:
-                bookings = bookingRepository.findByItemOwnerAndStartLessThanAndEndGreaterThanOrderByStartDesc
-                        (userId, currentTime, currentTime, pageable);
+                bookings = bookingRepository.findByItemOwnerAndStartLessThanAndEndGreaterThanOrderByStartDes(userId, currentTime, currentTime, pageable);
                 break;
             case PAST:
                 bookings = bookingRepository.findByItemOwnerAndEndLessThanOrderByStartDesc(userId, currentTime, pageable);

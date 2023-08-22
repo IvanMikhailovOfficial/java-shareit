@@ -53,8 +53,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "itemRequest с id " + itemRequestId + " не найден");
         }
 
-        ItemRequestOutputDto itemRequestOutputDto = ItemRequestMapper.toOutputDto
-                (itemRequestRepository.findById(itemRequestId).get());
+        ItemRequestOutputDto itemRequestOutputDto = ItemRequestMapper.toOutputDto(itemRequestRepository.findById(itemRequestId).get());
         itemRequestOutputDto.setItems(ItemMapperDto.toListItemDto(itemRepository.findAllByRequestId(itemRequestId)));
         return itemRequestOutputDto;
     }
@@ -68,8 +67,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
         Pageable sortedPagination = Utility.paginationWithoutSort(from, size);
         Page<ItemRequest> itemRequests = itemRequestRepository.findAllByRequestorIdNot(userId, sortedPagination);
-        List<ItemRequestOutputDto> itemRequestOutputDtoList = ItemRequestMapper.toItemRequestOutputList
-                (itemRequests.toList());
+        List<ItemRequestOutputDto> itemRequestOutputDtoList = ItemRequestMapper.toItemRequestOutputList(itemRequests.toList());
         for (ItemRequestOutputDto dto : itemRequestOutputDtoList) {
             dto.setItems(ItemMapperDto.toListItemDto(itemRepository.findAllByRequestId(dto.getId())));
         }
@@ -82,8 +80,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
             log.info("user с id {} не найден", userId);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Юзер с id " + userId + " не найден");
         }
-        List<ItemRequestOutputDto> list = ItemRequestMapper.toItemRequestOutputList
-                (itemRequestRepository.findAllByRequestorIdOrderByCreatedDesc(userId));
+        List<ItemRequestOutputDto> list = ItemRequestMapper.toItemRequestOutputList(itemRequestRepository.findAllByRequestorIdOrderByCreatedDesc(userId));
 
         for (ItemRequestOutputDto request : list) {
             request.setItems(ItemMapperDto.toListItemDto(itemRepository.findAllByRequestId(request.getId())));

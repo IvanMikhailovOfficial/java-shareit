@@ -64,19 +64,19 @@ public class BookingController {
     public ResponseEntity<List<BookingDto>> getUserBookings(@RequestHeader(xSharer) Long userId,
                                                             @RequestParam(name = "state",
                                                                     defaultValue = "ALL") String state,
-                                                            @RequestParam(name="size",required = false) Integer size,
-                                                            @RequestParam(name="from",required = false) Integer from) {
+                                                            @RequestParam(name = "size", required = false) Integer size,
+                                                            @RequestParam(name = "from", required = false) Integer from) {
         log.info("Получен GET запрос getUserBookings  по эндпоинту /bookings/ со значениями  userID {}", userId);
-        return new ResponseEntity<>(bookingService.getUserBookings(userId, state,from,size), HttpStatus.OK);
+        return new ResponseEntity<>(bookingService.getUserBookings(userId, state, from, size), HttpStatus.OK);
     }
 
     @GetMapping("/owner")
     public ResponseEntity<List<BookingDto>> getBookingsByOwner(@RequestHeader(xSharer) Long userId,
                                                                @RequestParam(name = "state",
                                                                        defaultValue = "ALL") String state,
-                                                               @RequestParam(name="size",required = false) Integer size,
-                                                               @RequestParam(name="from",required = false) Integer from) {
+                                                               @RequestParam(name = "size", required = false) Integer size,
+                                                               @RequestParam(name = "from", required = false) Integer from) {
         log.info("Получен GET запрос getBookingsByOwner  по эндпоинту /bookings/owner со значениями  userID {}", userId);
-        return new ResponseEntity<>(bookingService.getOwnerBookings(userId, state,from,size), HttpStatus.OK);
+        return new ResponseEntity<>(bookingService.getOwnerBookings(userId, state, from, size), HttpStatus.OK);
     }
 }
