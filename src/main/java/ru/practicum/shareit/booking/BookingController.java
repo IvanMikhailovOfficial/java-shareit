@@ -21,10 +21,10 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    private final String X_SHARER = "X-Sharer-User-Id";
+    private final String x_SHARER = "X-Sharer-User-Id";
 
     @GetMapping("/{bookingId}")
-    public ResponseEntity<BookingDto> readBookingById(@RequestHeader(X_SHARER) Long userId,
+    public ResponseEntity<BookingDto> readBookingById(@RequestHeader(x_SHARER) Long userId,
                                                       @PathVariable Long bookingId) {
         log.info("Получен GET запрос по эндпоинту /bookings/{bookingId} со значениями userId{} и bookingId {}", userId,
                 bookingId);
@@ -32,7 +32,7 @@ public class BookingController {
     }
 
     @PostMapping()
-    public ResponseEntity<BookingDto> createBooking(@RequestHeader(X_SHARER) Long userId,
+    public ResponseEntity<BookingDto> createBooking(@RequestHeader(x_SHARER) Long userId,
                                                     @RequestBody @Valid BookingCreateDto bookingCreateDto,
                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -44,7 +44,7 @@ public class BookingController {
 
     @PatchMapping("/{bookingId}")
     public ResponseEntity<BookingDto> updateBooking(@PathVariable Long bookingId,
-                                                    @RequestHeader(X_SHARER) Long userId,
+                                                    @RequestHeader(x_SHARER) Long userId,
                                                     @RequestParam(name = "approved", required = false) Boolean approved) {
         log.info("Получен PATCH запрос updateBooking  по эндпоинту /bookings/{bookingId} со значениями userId{} и " +
                 "bookingId {}", userId, bookingId);
@@ -61,7 +61,7 @@ public class BookingController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<BookingDto>> getUserBookings(@RequestHeader(X_SHARER) Long userId,
+    public ResponseEntity<List<BookingDto>> getUserBookings(@RequestHeader(x_SHARER) Long userId,
                                                             @RequestParam(name = "state",
                                                                     defaultValue = "ALL") String state,
                                                             @RequestParam(name = "size", required = false) Integer size,
@@ -71,7 +71,7 @@ public class BookingController {
     }
 
     @GetMapping("/owner")
-    public ResponseEntity<List<BookingDto>> getBookingsByOwner(@RequestHeader(X_SHARER) Long userId,
+    public ResponseEntity<List<BookingDto>> getBookingsByOwner(@RequestHeader(x_SHARER) Long userId,
                                                                @RequestParam(name = "state",
                                                                        defaultValue = "ALL") String state,
                                                                @RequestParam(name = "size", required = false) Integer size,
