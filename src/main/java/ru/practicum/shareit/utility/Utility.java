@@ -1,5 +1,6 @@
 package ru.practicum.shareit.utility;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -8,10 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
-public class Utility {
-
-    private Utility() {
-    }
+@UtilityClass
+public final class Utility {
 
     public static Pageable paginationWithSort(Integer from, Integer size) {
 

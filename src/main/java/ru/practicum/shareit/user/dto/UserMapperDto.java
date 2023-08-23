@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
-public class UserMapperDto {
+public final class UserMapperDto {
     public static UserDto toUserDto(User user) {
         return UserDto.builder()
                 .id(user.getId())

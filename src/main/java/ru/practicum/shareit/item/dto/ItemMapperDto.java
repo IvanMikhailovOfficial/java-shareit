@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
-public class ItemMapperDto {
+public final class ItemMapperDto {
     public static ItemDto toItemDto(Item item) {
         return ItemDto.builder()
                 .id(item.getId())
