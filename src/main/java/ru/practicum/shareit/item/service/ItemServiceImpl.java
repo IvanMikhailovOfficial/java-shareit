@@ -33,16 +33,15 @@ import static ru.practicum.shareit.booking.dto.BookingMapperDto.bookingItemRespo
 import static ru.practicum.shareit.comments.dto.CommentMapperDto.toListComment;
 import static ru.practicum.shareit.item.dto.ItemMapperDto.*;
 
-    @Service
-    @RequiredArgsConstructor
-    @Slf4j
-    @Transactional(readOnly = true)
-    public class ItemServiceImpl implements ItemService {
+@Service
+@RequiredArgsConstructor
+@Slf4j
+@Transactional(readOnly = true)
+public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final BookingRepository bookingRepository;
     private final CommentRepository commentRepository;
-
 
     @Override
     @Transactional
@@ -114,7 +113,6 @@ import static ru.practicum.shareit.item.dto.ItemMapperDto.*;
             itemResponseDto.setLastBooking(bookingItemResponseDto(lastBooking.get(0)));
             itemResponseDto.setNextBooking(bookingItemResponseDto(nextBooking.get(0)));
         }
-
         return itemResponseDto;
     }
 
@@ -124,7 +122,6 @@ import static ru.practicum.shareit.item.dto.ItemMapperDto.*;
         if (!itemRepository.existsById(id)) {
             throw new EntityNotFoundException("Вещь не найдена");
         }
-
         itemRepository.deleteById(id);
     }
 
@@ -150,7 +147,6 @@ import static ru.practicum.shareit.item.dto.ItemMapperDto.*;
         if (text == null || text.isBlank()) {
             return new ArrayList<>();
         }
-
         return toListItemDto(itemRepository.search(text));
     }
 
