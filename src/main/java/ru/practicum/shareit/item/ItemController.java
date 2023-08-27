@@ -23,16 +23,14 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    private final String xSharer = "X-Sharer-User-Id";
-
     @GetMapping
-    public ResponseEntity<List<ItemResponseDto>> getAllItems(@RequestHeader(xSharer) Long userId) {
+    public ResponseEntity<List<ItemResponseDto>> getAllItems(@RequestHeader(value = "X-Sharer-User-Id") Long userId) {
         log.info("Получен GET запрос на получении всех Items");
         return new ResponseEntity<>(itemService.findAllItemByUserId(userId), HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemResponseDto> readItemById(@RequestHeader(xSharer) Long userId,
+    public ResponseEntity<ItemResponseDto> readItemById(@RequestHeader(value = "X-Sharer-User-Id") Long userId,
                                                         @PathVariable Long itemId) {
 
         log.info("Получен GET запрос на получении  Item по id {}", itemId);
@@ -40,7 +38,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemDto> createItem(@RequestHeader(xSharer) Long userId,
+    public ResponseEntity<ItemDto> createItem(@RequestHeader(value = "X-Sharer-User-Id") Long userId,
                                               @RequestBody @Valid ItemDto itemDto,
                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -51,7 +49,7 @@ public class ItemController {
     }
 
     @PatchMapping("/{itemId}")
-    public ResponseEntity<ItemDto> updateItem(@RequestHeader(xSharer) Long userId,
+    public ResponseEntity<ItemDto> updateItem(@RequestHeader(value = "X-Sharer-User-Id") Long userId,
                                               @PathVariable Long itemId,
                                               @RequestBody ItemDto itemDto) {
 

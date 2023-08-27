@@ -29,6 +29,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAllUser() {
         log.info("Получен GET запрос на получение всех USERS");
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+
     }
 
     @PostMapping()

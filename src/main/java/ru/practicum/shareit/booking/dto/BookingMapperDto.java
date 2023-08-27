@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
-public final class BookingMapperDto {
+public class BookingMapperDto {
     public static BookingDto toBookingDto(Booking booking) {
         return BookingDto.builder()
                 .id(booking.getId())
