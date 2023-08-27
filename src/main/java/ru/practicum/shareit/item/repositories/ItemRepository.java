@@ -23,5 +23,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE it.id = :itemId")
     Optional<Item> findByIdFull(Long itemId);
 
+    List<Item> findAllByRequestId(Long requestId);
+
     List<Item> findAllByOwnerIdOrderByIdAsc(Long id);
 }

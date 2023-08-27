@@ -33,25 +33,19 @@ public class UserServiceImpl implements UserService {
 
         if (userRepository.existsUserByEmailIs(userDto.getEmail())) {
             userRepository.save(user);
-            log.info("Пользователь с таким email уже существует");
             throw new EmailDuplicateException("Пользователь с таким email уже существует");
         }
-
-
         log.info("Пользователь сохранен: " + userDto);
-
         return toUserDto(userRepository.save(user));
     }
 
     @Override
     @Transactional
     public UserDto update(Long id, UserDto userDto) {
-        User user = userRepository.findById(id).get();
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("такого user не существует"));
 
         if (userDto.getEmail() != null) {
-            if (userRepository.existsUserByEmailIs(userDto.getEmail()) &&
-                    !user.getEmail().equals(userDto.getEmail())) {
-                log.info("Пользователь с таким email уже существует");
+            if (userRepository.existsUserByEmailIs(userDto.getEmail()) && !user.getEmail().equals(userDto.getEmail())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Пользователь с таким email уже существует");
             }
             user.setEmail(userDto.getEmail());
@@ -61,9 +55,7 @@ public class UserServiceImpl implements UserService {
             user.setName(userDto.getName());
         }
         log.info("Пользователь обновлён: " + userDto);
-
         return toUserDto(userRepository.save(user));
-
     }
 
     @Override
@@ -88,7 +80,6 @@ public class UserServiceImpl implements UserService {
         }
         log.info("User с id {} невозможно удалить,так как его не существует ", id);
         throw new EntityNotFoundException("Пользователь не найден");
-
     }
 
     @Override

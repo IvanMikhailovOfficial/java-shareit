@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import ru.practicum.shareit.booking.dto.BookingDtoUser;
 import ru.practicum.shareit.comments.dto.CommentResponseDto;
-import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
 import javax.validation.constraints.NotBlank;
@@ -26,7 +25,7 @@ public class ItemDto {
     private Boolean available;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User owner;
-    private ItemRequest request;
+    private Long requestId;
     private BookingDtoUser lastBooking;
     private BookingDtoUser nextBooking;
     private List<CommentResponseDto> comments;
