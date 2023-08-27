@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  gateway:
+    build: ./gateway
+    image: shareit-gateway-image
+    container_name: shareit-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - server
+    environment:
+      - SHAREIT_SERVER_URL=http://server:9090
+
+  server:
+    build: ./server
+    image: shareit-server-image
+    container_name: shareit-server
+    ports:
+      - "9090:9090"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - URL_DB=postgresql://db:5432/shareit
+      - SERVER_USERNAME_DB=postgres
+      - SERVER_PASSWORD_DB=123
+    restart: always
+
+  db:
+    image: postgres_db
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.postgres
+    volumes:
+      - /var/lib/postgresql/data/
+    container_name: shareit-db
+    ports:
+      - "9874:5432"
+    environment:
+      - POSTGRES_DB=shareit
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
