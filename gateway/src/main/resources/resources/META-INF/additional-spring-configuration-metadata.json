@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "headers.user.id.name",
+      "type": "java.lang.String",
+      "description": "Description for headers.user.id.name."
+    },
+    {
+      "name": "shareit-server.url",
+      "type": "java.lang.String",
+      "description": "Description for shareit-server.url."
+    }
+  ] }
