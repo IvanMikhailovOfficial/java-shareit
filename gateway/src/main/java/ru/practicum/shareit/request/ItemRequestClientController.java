@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestPost;
+import ru.practicum.shareit.utility.Utility;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -19,16 +20,15 @@ import javax.validation.constraints.PositiveOrZero;
 @Validated
 public class ItemRequestClientController {
     private final ItemRequestClient itemRequestClient;
-    private final String xSharer = "X-Sharer-User-Id";
 
     @GetMapping
-    public ResponseEntity<Object> getItemRequests(@RequestHeader(value = xSharer) Long requesterId) {
+    public ResponseEntity<Object> getItemRequests(@RequestHeader(value = Utility.SHARER) Long requesterId) {
         log.info("Получен GET запрос на получение списка своих запросов от user-a {}", requesterId);
         return itemRequestClient.getItemRequests(requesterId);
     }
 
     @GetMapping("/{requestId}")
-    public ResponseEntity<Object> getItemRequestById(@RequestHeader(value = xSharer) Long requesterId,
+    public ResponseEntity<Object> getItemRequestById(@RequestHeader(value = Utility.SHARER) Long requesterId,
                                                      @Positive @PathVariable Long requestId) {
 
         log.info("Получен GET запрос на получение данных кокретного запроса по его id {} от user-a {}", requestId,
@@ -37,7 +37,7 @@ public class ItemRequestClientController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Object> getAllItemRequests(@RequestHeader(value = xSharer) Long requesterId,
+    public ResponseEntity<Object> getAllItemRequests(@RequestHeader(value = Utility.SHARER) Long requesterId,
                                                      @RequestParam(name = "from", required = false, defaultValue = "0")
                                                      @PositiveOrZero Integer from,
                                                      @Positive @RequestParam(name = "size", required = false,
@@ -48,7 +48,7 @@ public class ItemRequestClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createItemRequest(@RequestHeader(value = xSharer) Long requesterId,
+    public ResponseEntity<Object> createItemRequest(@RequestHeader(value = Utility.SHARER) Long requesterId,
                                                     @RequestBody @Valid ItemRequestPost itemRequestPost) {
         log.info("Получен POST запрос на создание itemRequest от user-a {}", requesterId);
         return itemRequestClient.createItemRequest(requesterId, itemRequestPost);

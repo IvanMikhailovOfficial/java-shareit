@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookItemRequestDto;
 import ru.practicum.shareit.booking.dto.BookingState;
 import ru.practicum.shareit.exceptions.UnsupportedStateException;
+import ru.practicum.shareit.utility.Utility;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -22,10 +23,9 @@ import javax.validation.constraints.PositiveOrZero;
 @Validated
 public class BookingController {
     private final BookingClient bookingClient;
-    private final String xSharer = "X-Sharer-User-Id";
 
     @GetMapping
-    public ResponseEntity<Object> getUserBookings(@RequestHeader(value = xSharer) Long userId,
+    public ResponseEntity<Object> getUserBookings(@RequestHeader(value = Utility.SHARER) Long userId,
                                                   @RequestParam(name = "state", defaultValue = "ALL") String stateParam,
                                                   @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                                   @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
@@ -36,7 +36,7 @@ public class BookingController {
     }
 
     @GetMapping("/owner")
-    public ResponseEntity<Object> getBookingsByOwner(@RequestHeader(value = xSharer) Long userId,
+    public ResponseEntity<Object> getBookingsByOwner(@RequestHeader(value = Utility.SHARER) Long userId,
                                                      @RequestParam(name = "state", defaultValue = "ALL") String stateParam,
                                                      @PositiveOrZero @RequestParam(name = "from", defaultValue = "0")
                                                      Integer from,
@@ -49,7 +49,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createBooking(@RequestHeader(value = xSharer) Long userId,
+    public ResponseEntity<Object> createBooking(@RequestHeader(value = Utility.SHARER) Long userId,
                                                 @RequestBody @Valid BookItemRequestDto requestDto) {
         if (requestDto.getEnd() == null || requestDto.getStart() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -59,7 +59,7 @@ public class BookingController {
     }
 
     @GetMapping("/{bookingId}")
-    public ResponseEntity<Object> readBookingById(@RequestHeader(value = xSharer) Long userId,
+    public ResponseEntity<Object> readBookingById(@RequestHeader(value = Utility.SHARER) Long userId,
                                                   @PathVariable Long bookingId) {
         log.info("Получен GET запрос по эндпоинту /bookings/{bookingId} со значениями userId{} и bookingId {}", userId,
                 bookingId);
@@ -67,7 +67,7 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> updateBooking(@RequestHeader(value = xSharer) Long userId,
+    public ResponseEntity<Object> updateBooking(@RequestHeader(value = Utility.SHARER) Long userId,
                                                 @PathVariable Long bookingId,
                                                 @RequestParam(name = "approved",
                                                         required = false) Boolean approved) {

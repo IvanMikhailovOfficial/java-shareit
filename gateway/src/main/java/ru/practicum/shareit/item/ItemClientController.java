@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentRequestDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.utility.Utility;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -20,10 +21,9 @@ import javax.validation.constraints.PositiveOrZero;
 @Validated
 public class ItemClientController {
     private final ItemClient itemClient;
-    private final String xSharer = "X-Sharer-User-Id";
 
     @GetMapping
-    public ResponseEntity<Object> getAllItems(@RequestHeader(name = xSharer) Long userId,
+    public ResponseEntity<Object> getAllItems(@RequestHeader(name = Utility.SHARER) Long userId,
                                               @PositiveOrZero @RequestParam(name = "from", required = false,
                                                       defaultValue = "0") Integer from,
                                               @Positive @RequestParam(name = "size", required = false,
@@ -33,14 +33,14 @@ public class ItemClientController {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<Object> readItemById(@RequestHeader(name = xSharer) Long userId,
+    public ResponseEntity<Object> readItemById(@RequestHeader(name = Utility.SHARER) Long userId,
                                                @PathVariable Long itemId) {
         log.info("Получен GET запрос на получении  Item по id {}", itemId);
         return itemClient.readItemById(userId, itemId);
     }
 
     @PostMapping
-    public ResponseEntity<Object> createItem(@RequestHeader(name = xSharer) Long userId,
+    public ResponseEntity<Object> createItem(@RequestHeader(name = Utility.SHARER) Long userId,
                                              @RequestParam(name = "requestId", required = false) Long requestId,
                                              @RequestBody @Valid ItemDto itemDto) {
         log.info("Получен POST запрос на создание Item");
@@ -48,7 +48,7 @@ public class ItemClientController {
     }
 
     @PatchMapping("/{itemId}")
-    public ResponseEntity<Object> updateItem(@RequestHeader(name = xSharer) Long userId,
+    public ResponseEntity<Object> updateItem(@RequestHeader(name = Utility.SHARER) Long userId,
                                              @PathVariable Long itemId,
                                              @RequestBody ItemDto itemDto) {
         log.info("Получен PATCH запрос на обновление Item");
@@ -57,7 +57,7 @@ public class ItemClientController {
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchItemsByText(@RequestParam String text,
-                                                    @RequestHeader(name = xSharer) Long userid,
+                                                    @RequestHeader(name = Utility.SHARER) Long userid,
                                                     @PositiveOrZero @RequestParam(name = "from",
                                                             required = false, defaultValue = "0")
                                                     Integer from,
@@ -69,7 +69,7 @@ public class ItemClientController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public ResponseEntity<Object> addComment(@RequestHeader(name = xSharer) Long userId,
+    public ResponseEntity<Object> addComment(@RequestHeader(name = Utility.SHARER) Long userId,
                                              @PathVariable Long itemId,
                                              @RequestBody @Valid CommentRequestDto commentRequestDto) {
         log.info("Получен POST запрос на создание Comment от user {} к Item {}", userId, itemId);
